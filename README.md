@@ -1,6 +1,6 @@
 ## Configuração do projeto
 
-### Instalar depenências
+### Instalar dependências
 `npm install`
 ### Compilar o TypeScript
 `tsc -w`
