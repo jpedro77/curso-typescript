@@ -95,7 +95,7 @@ console.log(new DiferencaEntreDatas(d1, d2).executar())
 // Atributo: fila (Array)
 // Métodos: entrar, proximo, imprimir
 
-class Fila<T> {
+class Fila<T extends number | string> {
     private fila: Array<T>
 
     constructor(...args: T[]) {
@@ -131,3 +131,64 @@ console.log(fila.proximo())
 console.log(fila.proximo())
 console.log(fila.proximo())
 fila.imprimir()
+
+const novaFila = new Fila<number>(1, 2, 3)
+novaFila.imprimir()
+
+// const outraFila = new Fila<boolean>(true, false)
+
+// Desafio Mapa
+// Array de Objetos (Chave/Valor) -> itens
+// Métodos: obter(Chave), colocar({ C, V })
+// limpar(), imprimir()
+
+type Par<C, V> = { chave: C, valor: V }
+
+class Mapa<C, V> {
+    itens: Array<Par<C, V>> = new Array<Par<C, V>>()
+
+    obter(chave: C): Par<C, V> | null {
+        const resultado = this.itens.filter(i => i.chave === chave)
+        return resultado ? resultado[0] : null
+        // if (this.itens.length > 0) {
+        //     return this.itens.find(item => item.chave === elemento)
+        // } else {
+        //     return []
+        // }
+    }
+
+    colocar(par: Par<C, V>) {
+        const encontrado = this.obter(par.chave)
+        if(encontrado) {
+            encontrado.valor = par.valor
+        } else {
+            this.itens.push(par)
+        }
+        // const index = this.itens.findIndex(item => item.chave === item.chave)
+        //
+        // if (index > 0) {
+        //     this.itens[index].valor = item.valor
+        // } else {
+        //     this.itens.push(item)
+        // }
+    }
+
+    limpar() {
+        this.itens = new Array<Par<C, V>>()
+    }
+
+    imprimir() {
+        console.log(this.itens)
+    }
+}
+
+const mapa = new Mapa<number, string>()
+mapa.colocar({ chave: 1, valor: 'Pedro' })
+mapa.colocar({ chave: 2, valor: 'Rebeca' })
+mapa.colocar({ chave: 3, valor: 'Maria' })
+mapa.colocar({ chave: 1, valor: 'Gustavo' })
+
+console.log(mapa.obter(2))
+mapa.imprimir()
+mapa.limpar()
+mapa.imprimir()
